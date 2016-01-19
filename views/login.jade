@@ -1,16 +1,20 @@
-extends layout
+doctype html
+html
+	include layouts/head.jade
 
-block content
-  .container
-    h1 Login Page
-    p.lead Say something worthwhile here.
-    br
-    form(role='form', action="/login",method="post", style='max-width: 300px;')
-      .form-group
-          input.form-control(type='text', name="username", placeholder='Enter Username')
-      .form-group
-        input.form-control(type='password', name="password", placeholder='Password')
-      button.btn.btn-default(type='submit') Submit
-      &nbsp;
-      a(href='/')
-        button.btn.btn-primary(type="button") Cancel
+	body
+
+		div.login
+			div.login-body
+				img(src="../../images/logo.png", border="0", style="max-width:200px !important;")
+				div.login-content
+					form(role='form', action="/login",method="post")
+						.form-group
+							input.form-control(type='text', name="username", placeholder='Enter Username').input-text
+						.form-group
+							input.form-control(type='password', name="password", placeholder='Password').input-text
+						a(href="/register") Don't have an account?
+						div.login-links.login-buttons
+							button.btn.btn-primary(type='submit').submit Submit
+							a(href='/').cancel
+								button.btn.btn-primary(type="button") Cancel

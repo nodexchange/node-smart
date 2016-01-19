@@ -1,9 +1,11 @@
-aside.activity-bar#activity-bar
+aside.activity-bar#activity-bar.activity-contracted
+  a(href="#").activity-expand-button
+    include ../../public/images/svg/plus.svg
   div.activity-bar-inside
     h4 ACTIVITY
     span.date-ribbon TODAY
     div.activity-input
-      img(src="../../public/images/avatar.jpg", border="0").activity-author
+      img(src="../../images/avatar.jpg", border="0").activity-author
       div.activity-content
         span.bold Michael Buchannon
         span created new page
@@ -13,7 +15,7 @@ aside.activity-bar#activity-bar
           a(href="#") Wireframes Taiga Tribe
         span.activity-time 12 min ago
     div.activity-input
-      img(src="../../public/images/avatar.jpg", border="0").activity-author
+      img(src="../../images/avatar.jpg", border="0").activity-author
       div.activity-content
         span.bold Michael Buchannon
         span created new page
@@ -24,7 +26,7 @@ aside.activity-bar#activity-bar
         span.activity-time 12 min ago
     span.date-ribbon YESTERDAY
     div.activity-input
-      img(src="../../public/images/avatar.jpg", border="0").activity-author
+      img(src="../../images/avatar.jpg", border="0").activity-author
       div.activity-content
         span.bold Michael Buchannon
         span created new page
@@ -34,7 +36,7 @@ aside.activity-bar#activity-bar
           a(href="#") Wireframes Taiga Tribe
         span.activity-time 12 min ago
     div.activity-input
-      img(src="../../public/images/avatar.jpg", border="0").activity-author
+      img(src="../../images/avatar.jpg", border="0").activity-author
       div.activity-content
         span.bold Michael Buchannon
         span created new page
@@ -43,3 +45,4 @@ aside.activity-bar#activity-bar
           span in
           a(href="#") Wireframes Taiga Tribe
         span.activity-time 12 min ago
+script(src="/scripts/activity-bar.js", type="text/javascript")

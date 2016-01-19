@@ -1,6 +1,23 @@
 header.main-bar#main-bar
-  div.main-logo
-    include ../../public/images/svg/uxbox-logo.svg
-  div.user-zone
-    span Michael Buchannon
-    img(src="../../images/avatar.jpg", border="0")
+	div.main-logo
+		img(src="../../images/logo.png", border="0", style="max-width:200px !important;")
+	div.main-bar-link-buttons
+		a(href='/dashboard-posts')
+			span Posts
+		span.line |
+		a(href='/')
+			span Performance
+		span.line |
+		a(href='/')
+			span Users
+		span.line |
+		a(href='/')
+			span Charts
+	div.user-zone
+		if (!user)
+			span Michael Buchannon
+		if (user)
+			span #{user.username}
+		img(src="../../images/avatar.jpg", border="0")
+		a(href='/logout')
+			img(src="../../images/logout.png", border="0" style="background-repeat:no-repeat; margin-left:10px; max-width:34px; border-width:0px;")

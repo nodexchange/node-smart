@@ -12,6 +12,12 @@ var LocalStrategy = require('passport-local').Strategy;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var packageJson = require('./package.json');
+console.log(packageJson.version);
+
+console.log(process.release);
+console.log(process.uptime());
+
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -44,7 +50,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
+mongoose.connect('mongodb://localhost/node-smart');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,7 +1,16 @@
-## User Authentication With Passport and Express 4
+## User Authentication and dashboard With Passport and Express 4
 
-View the blog post here: http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4
+## INSTALL
+[sudo] npm install
 
+## TO START:
+1. mongod --dbpath /home/martinwojtala/Workspace/db/
+2. node ./bin/www
 
-## TO START: 
-node ./bin/www
+## CURRENT ROUTES:
+http://localhost:3000
+http://localhost:3000/dashboard
+http://localhost:3000/login
+
+## DEBUG CALLS:
+http://localhost:3000/debug/add?action=add&section=activity (add dummy activities to db)

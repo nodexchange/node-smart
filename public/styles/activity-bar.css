@@ -1,0 +1,133 @@
+.activity-bar {
+  background-color: #fff;
+  bottom: 0;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  width: 250px;
+  box-shadow: -1px 0px 2px rgba(49, 49, 49, 0.38);
+}
+
+.activity-contracted {
+  right: -225px;
+}
+.activity-contract-button {
+  display: none;
+}
+.activity-contracted .activity-bar-inside {
+  opacity:0;
+}
+.activity-expanded {
+  right: 0px;
+}
+.activity-expanded .activity-bar-inside {
+  opacity:1;
+}
+
+.activity-bar .activity-expand-button {
+  position: absolute;
+  top:73px;
+  left:5px;
+  height: 14px;
+  width: 14px;
+  z-index: 22;
+}
+.activity-bar .activity-expand-button svg {
+    fill: #b1b1b1;
+    height: 14px;
+    margin-right: 5px;
+    width: 14px;
+}
+
+.activity-bar .activity-bar-inside {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-top: 70px;
+}
+
+.activity-bar h4 {
+  color: gray;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.activity-bar .date-ribbon {
+  background-color: #d0d0d0;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px;
+  text-align: center;
+  width: 100%;
+}
+
+.activity-bar .activity-input {
+  border-bottom: 1px solid #ececec;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.8125rem;
+  padding: 10px;
+}
+
+.activity-bar .activity-input img.activity-author {
+  border-radius: 50%;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  height: 30px;
+  margin-right: 15px;
+  width: 30px;
+}
+
+.activity-bar .activity-input .activity-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.activity-bar .activity-input .activity-content .activity-project {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.activity-bar .activity-input .activity-content .activity-project a {
+  font-weight: bold;
+  margin: 0 3px;
+}
+
+.activity-bar .activity-input .activity-content .activity-time {
+  color: #b1b1b1;
+  font-size: 0.6875rem;
+  font-style: italic;
+}

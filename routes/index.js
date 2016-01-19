@@ -37,9 +37,10 @@ router.get('/login', function(req, res) {
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
     req.session.save(function (err) {
         if (err) {
+          console.log(err);
             return next(err);
         }
-        res.redirect('/');
+        res.redirect('/dashboard');
     });
 });
 
@@ -53,29 +54,36 @@ router.get('/logout', function(req, res, next) {
     });
 });
 
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
+// ADMIN
+router.get('/dashboard', function (req, res) {
+  if (req.user) {
+    res.render('dashboard-home', { user : req.user });
+  } else {
+    res.render('login', { user : req.user });
+  }
 });
 
 // ADMIN
-
-router.get('/dashboard', function (req, res) {
-    res.render('dashboard', { user : req.user });
+router.get('/dashboard-posts', function (req, res) {
+  if (req.user) {
+    res.render('dashboard-posts', { user : req.user });
+  } else {
+    res.render('login', { user : req.user });
+  }
 });
 
-
-router.get('/workspace', function (req, res) {
-    res.render('workspace', { user : req.user });
+/* DEBUG */
+router.get('/debug/:action', function(req, res) {
+  switch(req.query.section) {
+    case 'activity':
+      if (req.query.action == 'add') {
+        console.log('READY TO ADD');
+      }
+      break;
+  }
+  //self.dispatchServerSmartEvent(SmartEvent.HEADERS.debug, 'buy');
+  // self.sendHtmlResponse(res, 'Dispatched Budget Buy '+Math.random()*2000 + ' ::: ');
 });
-
-
-router.get('/login-admin', function (req, res) {
-    res.render('login-admin', { user : req.user });
-});
-
-
-
-
 
 
 module.exports = router;
