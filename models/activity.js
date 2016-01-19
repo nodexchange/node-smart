@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ErrorLog = new Schema({
-    errorCode: String,
+var ActivitySchema = new Schema({
+    author: String,
     text: String,
-    time: Date,
+    time: {type: Date, default: Date.now},
     type: String,
     section: String,
     subsection: String
 });
 
-module.exports = mongoose.model('logs', ErrorLog);
+module.exports = mongoose.model('activity', ActivitySchema);

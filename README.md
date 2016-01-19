@@ -14,3 +14,5 @@ http://localhost:3000/login
 
 ## DEBUG CALLS:
 http://localhost:3000/debug/add?action=add&section=activity (add dummy activities to db)
+http://localhost:3000/debug/log?action=add&section=activity
+http://localhost:3000/debug/flush?action=add&section=activity

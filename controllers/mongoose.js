@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
-var SmartEvent = require('../event/SmartEvent.js');
-var MongooseSchema = require('../database/MongooseSchema.js');
+var IQEvent = require('../event/IQEvent');
 
 var MongooseController = function() {
 
   var ip_addr = process.env.OPENSHIFT_NODEJS_IP   || '127.0.0.1';
   var port    = process.env.OPENSHIFT_NODEJS_PORT || '8080';
 
-  var connection_string = '127.0.0.1:27017/YOUR_APP_NAME';
+  var connection_string = '127.0.0.1:27017/NODE-SMART';
   // if OPENSHIFT env variables are present, use the available connection info:
   if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
     this.connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -18,8 +17,8 @@ var MongooseController = function() {
   }
 
   this.settings = {
-    'localhost': 'mongodb://localhost/',
-    'live': 'mongodb://localhost/'
+    'localhost': 'mongodb://localhost/node-smart',
+    'live': 'mongodb://localhost/node-smart'
   }
   this.init();
 }
@@ -33,6 +32,8 @@ MongooseController.prototype = {
     }
     var self = this;
 
+    var activityModel = require('../models/activity');
+
     mongoose.connect(database, function(err) {
       if (err) throw err;
     });
@@ -40,27 +41,17 @@ MongooseController.prototype = {
       console.error.bind(console, 'connection error:');
     });
     mongoose.connection.on('open', function() {
-      var buy = mongoose.model('Bought', mongoose.Schema(MongooseSchema.BOUGHT));
-      var sell = mongoose.model('Sold', mongoose.Schema(MongooseSchema.SOLD));
-      var retire = mongoose.model('Retired', mongoose.Schema(MongooseSchema.RETIRED));
-      var budget = mongoose.model('Budget', mongoose.Schema(MongooseSchema.BUDGET_ACCOUNT));
-      var report = mongoose.model('Report', mongoose.Schema(MongooseSchema.DAILY_REPORT));
-
-      var event = new SmartEvent(SmartEvent.MONGOOSE_READY);
+      var event = new IQEvent(IQEvent.MONGOOSE_READY);
       event.mongoose = mongoose;
-      event.buy = buy;
-      event.sell = sell;
-      event.retire = retire;
-      event.budget = budget;
-      event.report = report;
-
-      self.smartDispatcher.dispatchEvent(event);
+      event.activity = activityModel;
+      //event.users = users;
+      self.events.dispatchEvent(event);
     });
   }
 }
 
-module.exports = function(smartDispatcher, settings) {
-  MongooseController.prototype.smartDispatcher = smartDispatcher;
+module.exports = function(settings, eventManager) {
+  MongooseController.prototype.events = eventManager;
   MongooseController.prototype.settings = settings;
   return MongooseController;
 }
