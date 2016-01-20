@@ -90,7 +90,7 @@ Routes.prototype = {
 
     router.post('/data/activity', function(req, res) {
       if (req.user) {
-        self.dispatchIQEvent('activity', res)
+        self.dispatchIQEvent('activity', res);
       } else {
         res.json({});
         console.log('not authorised');
@@ -147,4 +147,4 @@ module.exports = function(settings, eventManager) {
   Routes.prototype.settings = settings;
   Routes.prototype.eventManager = eventManager;
   return Routes;
-}
+};
