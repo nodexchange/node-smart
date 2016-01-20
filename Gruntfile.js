@@ -21,12 +21,17 @@ module.exports = function(grunt) {
       },
 
       // when this task is run, lint the Gruntfile and all js files in src
-      build: ['Grunfile.js', 'routes/*.js']
+      build: ['Grunfile.js', 'routes/*.js', 'config/*.js', 'controllers/*.js', 'event/*.js',
+          'models/*.js', 'test/*.js']
     },
 
     watch: {
       // for scripts, run jshint and uglify
       scripts: {
+        files: 'routes/*.js',
+        tasks: ['jshint']
+      },
+      server: {
         files: 'routes/*.js',
         tasks: ['jshint']
       }

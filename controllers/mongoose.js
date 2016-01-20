@@ -15,25 +15,21 @@ var MongooseController = function() {
     process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
     process.env.OPENSHIFT_APP_NAME;
   }
-
   this.settings = {
     'localhost': 'mongodb://localhost/node-smart',
     'live': 'mongodb://localhost/node-smart'
-  }
+  };
   this.init();
-}
+};
 
 MongooseController.prototype = {
   init: function() {
-    if (process.env.OPENSHIFT_NODEJS_IP) {
-      var database = 'mongodb://'+this.connectionString;
-    } else {
-      var database = this.settings.localhost;
-    }
     var self = this;
-
+    var database = this.settings.localhost;
+    if (process.env.OPENSHIFT_NODEJS_IP) {
+      database = 'mongodb://'+this.connectionString;
+    }
     var activityModel = require('../models/activity');
-
     mongoose.connect(database, function(err) {
       if (err) throw err;
     });
@@ -48,10 +44,10 @@ MongooseController.prototype = {
       self.events.dispatchEvent(event);
     });
   }
-}
+};
 
 module.exports = function(settings, eventManager) {
   MongooseController.prototype.events = eventManager;
   MongooseController.prototype.settings = settings;
   return MongooseController;
-}
+};

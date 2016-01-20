@@ -13,7 +13,7 @@ EventController.prototype.addEventListener = function(type, handler, obj) {
       this.eventTypes[type].push({'ref': obj, 'handler': handler});
     }
   }
-}
+};
 
 EventController.prototype.removeEventListener = function(type, handler, obj) {
   if (typeof this.eventTypes[type] == 'undefined') {
@@ -38,7 +38,7 @@ EventController.prototype.removeEventListener = function(type, handler, obj) {
       }
     }
   }
-}
+};
 
 EventController.prototype.dispatchEvent = function(event) {
   if (typeof event == 'string') {
@@ -75,7 +75,7 @@ EventController.prototype.dispatchEvent = function(event) {
       console.log('[EventController] ' + ' NO HANDLER FOR : '+event.type);
     }
   }
-}
+};
 EventController.prototype.inArray = function(needle, haystack) {
   if (this.isArray(haystack)) {
     for (var i = 0; i < haystack.length; i++) {
@@ -91,12 +91,12 @@ EventController.prototype.inArray = function(needle, haystack) {
     }
   }
   return false;
-}
+};
 EventController.prototype.isArray = function(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == 'array';
-}
+};
 
 module.exports = function(settings) {
   EventController.prototype.settings = settings;
   return EventController;
-}
+};
