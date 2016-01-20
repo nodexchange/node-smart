@@ -28,11 +28,7 @@ module.exports = function(grunt) {
     watch: {
       // for scripts, run jshint and uglify
       scripts: {
-        files: 'routes/*.js',
-        tasks: ['jshint']
-      },
-      server: {
-        files: 'routes/*.js',
+        files: ['app.js', 'controllers/*.js', 'helpers/*.js', 'models/*.js', 'routes/*.js'],
         tasks: ['jshint']
       }
     }, // watch

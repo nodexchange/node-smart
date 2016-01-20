@@ -17,9 +17,7 @@ ActivityController.prototype = {
     });
 
     self.events.addEventListener(IQEvent.EXPRESS_RENDER, function(event) {
-      self.activity.find({}, function(err, response) {
-        event.response.json(response);
-      });
+      
     });
     self.events.addEventListener(IQEvent.SERVER, function(event) {
       if (event.header == IQEvent.HEADERS.debug) {

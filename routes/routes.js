@@ -82,25 +82,16 @@ Routes.prototype = {
     // ADMIN
     router.get('/dashboard', function (req, res) {
       if (req.user) {
-        res.render('dashboard-home', { user : req.user });
+        self.dispatchRenderEvent('dashboard',req, res);
       } else {
         res.render('login', { user : req.user });
       }
     });
-
-    router.post('/data/activity', function(req, res) {
-      if (req.user) {
-        self.dispatchIQEvent('activity', res);
-      } else {
-        res.json({});
-        console.log('not authorised');
-      }
-    });
-
     // ADMIN
     router.get('/dashboard-posts', function (req, res) {
       if (req.user) {
-        res.render('dashboard-posts', { user : req.user });
+        self.dispatchRenderEvent('dashboard-posts', req, res);
+        //res.render('dashboard-posts', { user : req.user });
       } else {
         res.render('login', { user : req.user });
       }
@@ -123,9 +114,10 @@ Routes.prototype = {
     res.send('<html><body><p>' + message + '</p></body></html>');
   },
 
-  dispatchIQEvent: function(header, res) {
+  dispatchRenderEvent: function(header, req, res) {
     var event = new IQEvent(IQEvent.EXPRESS_RENDER);
     event.header = header;
+    event.request = req;
     event.response = res;
     this.eventManager.dispatchEvent(event);
   },

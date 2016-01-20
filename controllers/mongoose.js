@@ -19,6 +19,7 @@ var MongooseController = function() {
     'localhost': 'mongodb://localhost/node-smart',
     'live': 'mongodb://localhost/node-smart'
   };
+  this.installCache();
   this.init();
 };
 
@@ -43,6 +44,13 @@ MongooseController.prototype = {
       //event.users = users;
       self.events.dispatchEvent(event);
     });
+  },
+  installCache: function() {
+    var cacheOpts = {
+      max:50,
+      maxAge:1000*60*2
+    };
+    require('mongoose-cache').install(mongoose, cacheOpts)
   }
 };
 

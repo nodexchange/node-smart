@@ -28,6 +28,8 @@ C:\mongodb\bin\mongod.exe --dbpath c:\Users\martin\Workspace\mongodb
 
 git bash:
 C:/mongodb/bin/mongod.exe --dbpath c:/Users/martin/Workspace/mongodb
+HP:
+C:/Program\ Files/MongoDB/Server/3.2/bin/mongod.exe --dbpath C:/Users/thronesprince/Workspace/mongod
 
 Then:
 mongod --dbpath /home/martiQnwojtala/Software/DB
