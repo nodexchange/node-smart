@@ -97,6 +97,27 @@ Routes.prototype = {
       }
     });
 
+    router.get('/dashboard-accounts', function (req, res) {
+      if (req.user) {
+        self.dispatchRenderEvent('dashboard-accounts', req, res);
+        //res.render('dashboard-posts', { user : req.user });
+      } else {
+        res.render('login', { user : req.user });
+      }
+    });
+
+    router.post('/api/data/dashboard-accounts', function(req, res, next) {
+      if (req.user) {
+        console.log('[dashboard-accounts] authorised to make the request');
+        var json = '{"current":1,"rowCount":10,"rows":[{"id":19,"sender":"123@test.de","received":"2014-05-30T22:15:00"},{"id":14,"sender":"123@test.de","received":"2014-05-30T20:15:00"},...],"total":1123}';
+        res.json(json);
+      } else {
+        console.log('[dashboard-accounts] NOT authorised to make the request');
+        res.json({});
+      }
+    });
+
+
     /* DEBUG */
     router.get('/debug/:action', function(req, res) {
       switch(req.query.section) {

@@ -1,0 +1,19 @@
+extends layouts/dashboard
+
+block content
+	section.dashboard-content
+		table#grid-data-api.table.table-condensed.table-hover.table-striped(data-toggle='bootgrid', data-ajax='true', data-url='/api/data/dashboard-accounts')
+			thead
+				tr
+					th(data-column-id='id', data-type='numeric', data-identifier='true') ID
+					th(data-column-id='sender') Sender
+					th(data-column-id='received', data-order='desc') Received
+
+		table#grid-data.table.table-condensed.table-hover.table-striped
+			thead
+				tr
+					th(data-column-id='id', data-type='numeric') ID
+					th(data-column-id='sender') Sender
+					th(data-column-id='received', data-order='desc') Received
+					th(data-column-id='commands', data-formatter='commands', data-sortable='false') Commands
+					script(src="/scripts/dashboard-accounts.js", type="text/javascript")

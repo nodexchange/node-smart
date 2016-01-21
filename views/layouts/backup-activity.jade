@@ -1,0 +1,61 @@
+aside.activity-bar#activity-bar.activity-contracted
+  a(href="#").activity-expand-button
+    include ../../public/images/svg/plus.svg
+  div.activity-bar-inside
+    h4 ACTIVITY
+    span.date-ribbon TODAY
+
+    for activity in activities
+      div.activity-input
+        img(src="../../images/avatar.jpg", border="0").activity-author
+        div.activity-content
+          span.bold #{activity.author}
+          span #{activity.text}
+          div.activity-project
+            a(href="#") #{activity.section}
+            span in
+            a(href="#") #{activity.subsection}
+          span.activity-time #{activity.time}
+
+    div.activity-input
+      img(src="../../images/avatar.jpg", border="0").activity-author
+      div.activity-content
+        span.bold Michael Buchannon
+        span created new page
+        div.activity-project
+          a(href="#") Contact
+          span in
+          a(href="#") Wireframes Taiga Tribe
+        span.activity-time 12 min ago
+    div.activity-input
+      img(src="../../images/avatar.jpg", border="0").activity-author
+      div.activity-content
+        span.bold Michael Buchannon
+        span created new page
+        div.activity-project
+          a(href="#") Contact
+          span in
+          a(href="#") Wireframes Taiga Tribe
+        span.activity-time 12 min ago
+    span.date-ribbon YESTERDAY
+    div.activity-input
+      img(src="../../images/avatar.jpg", border="0").activity-author
+      div.activity-content
+        span.bold Michael Buchannon
+        span created new page
+        div.activity-project
+          a(href="#") Contact
+          span in
+          a(href="#") Wireframes Taiga Tribe
+        span.activity-time 12 min ago
+    div.activity-input
+      img(src="../../images/avatar.jpg", border="0").activity-author
+      div.activity-content
+        span.bold Michael Buchannon
+        span created new page
+        div.activity-project
+          a(href="#") Contact
+          span in
+          a(href="#") Wireframes Taiga Tribe
+        span.activity-time 12 min ago
+script(src="/scripts/activity-bar.js", type="text/javascript")

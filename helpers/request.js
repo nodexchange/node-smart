@@ -1,4 +1,5 @@
 var IQEvent = require('../event/IQEvent.js');
+var async = require('async');
 
 var RequestHelper = function() {
   this.addEventListeners();
@@ -30,6 +31,7 @@ sends back the response with the data included.
     var self = this;
     self.events.addEventListener(IQEvent.MONGOOSE_READY, function(event) {
       self.activity = event.activity;
+      self.accounts = event.accounts;
     });
 
     self.events.addEventListener(IQEvent.EXPRESS_RENDER, function(event) {
@@ -44,6 +46,9 @@ sends back the response with the data included.
           break;
         case 'dashboard-posts':
           self.renderDashboardPosts(req, res);
+          break;
+        case 'dashboard-accounts':
+          self.renderDashboardAccounts(req, res);
           break;
       }
       //self.activity.find({}).limit(10).cache().exec(function(err, activities) {
@@ -69,17 +74,49 @@ self.activity.find({}, function(err, response) {
       */;
     });
   },
+  getActivities: function(cb) {
+    var self = this;
+    self.activity.find({}).limit(10).cache().exec(cb);
+    // self.activity.find({}).limit(10).cache().exec(function(err, activities) {
+    //   //res.render('dashboard-posts', { user : req.user });
+    //   res.render('dashboard-home', { user : req.user, activities: activities });
+    // });
+  },
+
+  getAccounts: function(cb) {
+    var self = this;
+    self.accounts.find({}).limit(10).cache().exec(cb);
+    // self.activity.find({}).limit(10).cache().exec(function(err, activities) {
+    //   //res.render('dashboard-posts', { user : req.user });
+    //   res.render('dashboard-home', { user : req.user, activities: activities });
+    // });
+  },
+
+  getData: function(cb) {
+    var self = this;
+    async.parallel([self.getActivities(cb)], function(err, data) {
+      if (!err) cb.apply(null, data);
+    });
+  },
+
   renderDashboard: function(req, res) {
     var self = this;
-    self.activity.find({}).limit(10).cache().exec(function(err, activities) {
-      console.log(activities);
-      //res.render('dashboard-posts', { user : req.user });
-      res.render('dashboard-home', { user : req.user });
-    })
+    self.getData(function(err, data) {
+      res.render('dashboard-home', { user : req.user, activities: data });
+    });
 
   },
   renderDashboardPosts: function(req, res) {
-    res.render('dashboard-posts', { user : req.user });
+    var self = this;
+    self.getData(function(err, data) {
+      res.render('dashboard-posts', { user : req.user, activities: data });
+    });
+  },
+  renderDashboardAccounts: function(req, res) {
+    var self = this;
+    self.getData(function(err, data) {
+      res.render('dashboard-accounts', { user : req.user, activities: data });
+    });
   }
 };
 
