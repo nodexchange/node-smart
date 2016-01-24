@@ -106,15 +106,11 @@ Routes.prototype = {
       }
     });
 
-    router.post('/api/data/dashboard-accounts', function(req, res, next) {
-      if (req.user) {
-        console.log('[dashboard-accounts] authorised to make the request');
-        var json = '{"current":1,"rowCount":10,"rows":[{"id":19,"sender":"123@test.de","received":"2014-05-30T22:15:00"},{"id":14,"sender":"123@test.de","received":"2014-05-30T20:15:00"},...],"total":1123}';
-        res.json(json);
-      } else {
-        console.log('[dashboard-accounts] NOT authorised to make the request');
-        res.json({});
-      }
+    router.get('/api/data/dashboard-accounts', function(req, res, next) {
+      console.log(' >>> HERE >>>');
+      var json = '{"records":[{"someAttribute":"I am record one","someOtherAttribute":"Fetched by AJAX"},{"someAttribute":"I am record two","someOtherAttribute":"Cuz its awesome"},{"someAttribute":"I am record three","someOtherAttribute":"Yup, still AJAX"}],"queryRecordCount":3,"totalRecordCount":3}';
+      res.json(json);
+      return;
     });
 
 
