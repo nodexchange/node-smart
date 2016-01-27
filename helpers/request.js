@@ -34,23 +34,19 @@ sends back the response with the data included.
       self.accounts = event.accounts;
     });
 
-    self.events.addEventListener(IQEvent.EXPRESS_RENDER, function(event) {
+    self.events.addEventListener(IQEvent.RENDER.DASHBOARD.HOME, function(event) {
       var req = event.request;
       var res = event.response;
-      var header = event.header;
-      console.log(header);
-      switch (header) {
-        case 'dashboard':
-          self.renderDashboard(req, res);
-          //res.render('dashboard-home', { user : req.user });
-          break;
-        case 'dashboard-posts':
-          self.renderDashboardPosts(req, res);
-          break;
-        case 'dashboard-accounts':
-          self.renderDashboardAccounts(req, res);
-          break;
-      }
+      self.renderDashboard(req, res);
+    });
+
+    self.events.addEventListener(IQEvent.RENDER.DASHBOARD.ACCOUNTS, function(event) {
+      var req = event.request;
+      var res = event.response;
+      self.renderDashboardAccounts(req, res);
+    });
+    self.events.addEventListener(IQEvent.REQUEST.JSON.ACCOUNTS, function(event) {
+      self.renderJSON(event);
       //self.activity.find({}).limit(10).cache().exec(function(err, activities) {
       //  console.log(activities);
       //})
@@ -117,6 +113,24 @@ self.activity.find({}, function(err, response) {
     self.getData(function(err, data) {
       res.render('dashboard-accounts', { user : req.user, activities: data });
     });
+  },
+  renderJSON: function(event) {
+    var self = this;
+    var req = event.request;
+    var res = event.response;
+    if (!req.user) {
+      // TODO(martin): Make sure to uncomment for secured get call;
+      //res.json({});
+      //return;
+    }
+    switch (event.type) {
+      case IQEvent.REQUEST.JSON.ACCOUNTS:
+        self.getAccounts(function(err, data) {
+          res.json(data);
+        });
+        break;
+    }
+
   }
 };
 
