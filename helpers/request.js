@@ -45,6 +45,13 @@ sends back the response with the data included.
       var res = event.response;
       self.renderDashboardAccounts(req, res);
     });
+
+    self.events.addEventListener(IQEvent.RENDER.DASHBOARD.POSTS, function(event) {
+      var req = event.request;
+      var res = event.response;
+      self.renderDashboardPosts(req, res);
+    });
+
     self.events.addEventListener(IQEvent.REQUEST.JSON.ACCOUNTS, function(event) {
       self.renderJSON(event);
       //self.activity.find({}).limit(10).cache().exec(function(err, activities) {

@@ -91,7 +91,6 @@ Routes.prototype = {
     router.get('/dashboard-posts', function (req, res) {
       if (req.user) {
         self.dispatchRenderEvent(IQEvent.RENDER.DASHBOARD.POSTS, req, res);
-        //res.render('dashboard-posts', { user : req.user });
       } else {
         res.render('login', { user : req.user });
       }
@@ -112,6 +111,13 @@ Routes.prototype = {
       self.dispatchRenderEvent(IQEvent.POST.JSON.ACCOUNTS, req, res);
     });
 
+    router.get('/api/data/dashboard-posts', function(req, res, next) {
+      self.dispatchRenderEvent(IQEvent.REQUEST.JSON.POSTS, req, res);
+    });
+
+    router.post('/api/post/dashboard-posts', function(req, res, next) {
+      self.dispatchRenderEvent(IQEvent.POST.JSON.POSTS, req, res);
+    });
 
     /* DEBUG */
     router.get('/debug/:action', function(req, res) {

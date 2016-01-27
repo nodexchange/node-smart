@@ -29,10 +29,12 @@ IQEvent.RENDER.DASHBOARD.POSTS = 'render.dashboard.posts';
 IQEvent.REQUEST = {};
 IQEvent.REQUEST.JSON = {};
 IQEvent.REQUEST.JSON.ACCOUNTS = 'request.json.accounts';
+IQEvent.REQUEST.JSON.POSTS = 'request.json.posts';
 
 IQEvent.POST = {};
 // Post events
 IQEvent.POST.JSON = {};
 IQEvent.POST.JSON.ACCOUNTS = 'post.json.accounts';
+IQEvent.POST.JSON.POSTS = 'post.json.posts';
 
 module.exports = IQEvent;
