@@ -1,8 +1,8 @@
-var SmartDispatcher = function() {
+var EventController = function() {
   this.eventTypes = {};
 };
 
-SmartDispatcher.prototype.addEventListener = function(type, handler, obj) {
+EventController.prototype.addEventListener = function(type, handler, obj) {
   if (typeof this.eventTypes[type] == 'undefined') {
     this.eventTypes[type] = [];
   }
@@ -13,9 +13,9 @@ SmartDispatcher.prototype.addEventListener = function(type, handler, obj) {
       this.eventTypes[type].push({'ref': obj, 'handler': handler});
     }
   }
-}
+};
 
-SmartDispatcher.prototype.removeEventListener = function(type, handler, obj) {
+EventController.prototype.removeEventListener = function(type, handler, obj) {
   if (typeof this.eventTypes[type] == 'undefined') {
     return;
   }
@@ -38,9 +38,9 @@ SmartDispatcher.prototype.removeEventListener = function(type, handler, obj) {
       }
     }
   }
-}
+};
 
-SmartDispatcher.prototype.dispatchEvent = function(event) {
+EventController.prototype.dispatchEvent = function(event) {
   if (typeof event == 'string') {
     event = new SmartEvent(event);
   }
@@ -59,7 +59,7 @@ SmartDispatcher.prototype.dispatchEvent = function(event) {
       header = ' && header: '+event.header;
     }
     if (this.settings.DEBUG.ENABLED && this.settings.DEBUG.LOGGING) {
-      console.log('[SmartDispatcher]'.yellow +': '+event.type.green + header.blue);
+      console.log('[EventController]' +': '+event.type + header);
     }
     var eventTypeClone = this.eventTypes[event.type].slice(0);
     for (var i = 0; i < eventTypeClone.length; i++) {
@@ -72,11 +72,11 @@ SmartDispatcher.prototype.dispatchEvent = function(event) {
     }
   } else {
     if (this.settings.DEBUG.ENABLED && this.settings.DEBUG.LOGGING) {
-      console.log('[SmartDispatcher]'.red +' NO HANDLER FOR : '+event.type.white);
+      console.log('[EventController] ' + ' NO HANDLER FOR : '+event.type);
     }
   }
-}
-SmartDispatcher.prototype.inArray = function(needle, haystack) {
+};
+EventController.prototype.inArray = function(needle, haystack) {
   if (this.isArray(haystack)) {
     for (var i = 0; i < haystack.length; i++) {
       if (haystack[i] == needle) {
@@ -91,12 +91,12 @@ SmartDispatcher.prototype.inArray = function(needle, haystack) {
     }
   }
   return false;
-}
-SmartDispatcher.prototype.isArray = function(obj) {
+};
+EventController.prototype.isArray = function(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == 'array';
-}
+};
 
 module.exports = function(settings) {
-  SmartDispatcher.prototype.settings = settings;
-  return SmartDispatcher;
-}
+  EventController.prototype.settings = settings;
+  return EventController;
+};

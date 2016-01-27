@@ -5,18 +5,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-var routes = require('./routes/index');
+var settings = require('./config/settings');
+var IQEvent = require('./event/IQEvent');
+var EventManager = require('./event/eventManager')(settings);
+var events = new EventManager();
+var RequestHelper = require('./helpers/request')(settings, events);
+var Activity = require('./controllers/activity')(settings, events);
+var Mongoose = require('./controllers/mongoose')(settings, events);
+var Routes = require('./routes/routes')(settings, events);
 var users = require('./routes/users');
 
-var packageJson = require('./package.json');
-console.log(packageJson.version);
+var requestHelper = new RequestHelper();
+var activity = new Activity();
+var mongoose = new Mongoose();
+var routes = new Routes();
 
-console.log(process.release);
-console.log(process.uptime());
+var packageJson = require('./package.json');
+// console.log(packageJson.version);
+// console.log(process.release);
+// console.log(process.uptime());
 
 var app = express();
 
@@ -41,7 +50,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', routes);
+app.use('/', routes.getRoutes());
 
 // passport config
 var Account = require('./models/account');
@@ -50,7 +59,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://localhost/node-smart');
+//mongoose.connect('mongodb://localhost/node-smart');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
