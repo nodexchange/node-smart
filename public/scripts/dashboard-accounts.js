@@ -2,31 +2,35 @@ function initTable() {
   $table.bootstrapTable({
     height: getHeight(),
     columns: [
-      [/*{
+      [{
         field: 'state',
         checkbox: true,
         rowspan: 2,
         align: 'center',
         valign: 'middle'
-      }, */{
-        title: '_id',
-        field: '_id',
+      }, {
+        title: 'Account ID',
+        field: 'id',
         rowspan: 2,
         align: 'center',
         valign: 'middle',
         sortable: true,
         footerFormatter: totalTextFormatter
+      }, {
+        title: 'Account Detail',
+        colspan: 3,
+        align: 'center'
       }],
       [{
         field: 'username',
-        title: 'username',
+        title: 'Account Name',
         sortable: true,
         editable: true,
         footerFormatter: totalNameFormatter,
         align: 'center'
       }, {
-        field: '__v',
-        title: '__v',
+        field: '_id',
+        title: 'Account HASH',
         sortable: true,
         align: 'center',
         editable: {
@@ -47,10 +51,15 @@ function initTable() {
           }
         },
         footerFormatter: totalPriceFormatter
+      }, {
+        field: 'operate',
+        title: 'Item Operate',
+        align: 'center',
+        events: operateEvents,
+        formatter: operateFormatter
       }]
     ]
   });
-
   // sometimes footer render error.
   setTimeout(function() {
     $table.bootstrapTable('resetView');
@@ -64,7 +73,7 @@ function initTable() {
       selections = getIdSelections();
       // push or splice the selections if you want to save all data selections
     });
-  $table.on('expand-row.bs.table', function(e, index, row, $detail) {
+  /*$table.on('expand-row.bs.table', function(e, index, row, $detail) {
     if (index % 2 == 1) {
       $detail.html('Loading from ajax request...');
       $.get('LICENSE', function(res) {
@@ -72,6 +81,7 @@ function initTable() {
       });
     }
   });
+  */
   $table.on('all.bs.table', function(e, name, args) {
     console.log(name, args);
   });
@@ -91,10 +101,41 @@ function initTable() {
 }
 
 function responseHandler(res) {
-  $.each(res, function(i, row) {
-    console.log(row.__v);
+  $.each(res.rows, function(i, row) {
     row.state = $.inArray(row.__v, selections) !== -1;
+    row.id = i;
   });
   console.log(res);
   return res;
+}
+
+window.operateEvents = {
+  'click .like': function(e, value, row, index) {
+    alert('You click like action, row: ' + JSON.stringify(row));
+  },
+  'click .remove': function(e, value, row, index) {
+    $table.bootstrapTable('remove', {
+      field: 'id',
+      values: [row.id]
+    });
+    ajaxPost(row, 'remove');
+  }
+};
+function ajaxPost(row, action) {
+  var data = {
+    id: row._id,
+    action: action
+  };
+  $.ajax({
+    url: "/api/post/dashboard-accounts",
+    type: "POST",
+    data: data,
+    success: function(data, textStatus, jqXHR) {
+      console.log(data);
+      //data - response from server
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(data);
+    }
+  });
 }

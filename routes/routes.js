@@ -100,23 +100,16 @@ Routes.prototype = {
     router.get('/dashboard-accounts', function (req, res) {
       if (req.user) {
         self.dispatchRenderEvent(IQEvent.RENDER.DASHBOARD.ACCOUNTS, req, res);
-        //res.render('dashboard-posts', { user : req.user });
       } else {
         res.render('login', { user : req.user });
       }
     });
-
     router.get('/api/data/dashboard-accounts', function(req, res, next) {
       self.dispatchRenderEvent(IQEvent.REQUEST.JSON.ACCOUNTS, req, res);
-      /*var json = {"total":800,"rows":[{"id":0,"name":"Item 0","price":"$0"},{"id":1,"name":"Item 1","price":"$1"},{"id":2,"name":"Item 2","price":"$2"},{"id":3,"name":"Item 3","price":"$3"},{"id":4,"name":"Item 4","price":"$4"},{"id":5,"name":"Item 5","price":"$5"},{"id":6,"name":"Item 6","price":"$6"},{"id":7,"name":"Item 7","price":"$7"},{"id":8,"name":"Item 8","price":"$8"},{"id":9,"name":"Item 9","price":"$9"}]};
-      res.json(json);
-      if (req.user) {
-        console.log('POTENTIAL SECURED');
-      } else {
-        res.json({});
-        console.log('POTENTIAL UNSECURED');
-      }
-      */
+    });
+
+    router.post('/api/post/dashboard-accounts', function(req, res, next) {
+      self.dispatchRenderEvent(IQEvent.POST.JSON.ACCOUNTS, req, res);
     });
 
 
