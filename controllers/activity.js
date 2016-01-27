@@ -2,7 +2,7 @@ var IQEvent = require('../event/IQEvent.js');
 
 var ActivityController = function() {
   this.addEventListeners();
-}
+};
 
 ActivityController.prototype = {
   init: function() {
@@ -17,9 +17,7 @@ ActivityController.prototype = {
     });
 
     self.events.addEventListener(IQEvent.EXPRESS_RENDER, function(event) {
-      self.activity.find({}, function(err, response) {
-        event.response.json(response);
-      });
+      
     });
     self.events.addEventListener(IQEvent.SERVER, function(event) {
       if (event.header == IQEvent.HEADERS.debug) {
@@ -52,27 +50,29 @@ ActivityController.prototype = {
       {author:'Tom Buchannon', text:'removed new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'},
       {author:'Carl Buchannon', text:'cloned new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'}
     ];
+    // TODO(martin): check if that works.
+    var saveFnc = function(err, response) {
+      if (err) {
+        console.log('[Error]' + ' SAVE ERROR: ITEM : ' + ' Error message: '+err);
+        self.events.dispatchEvent(new SmartEvent(SmartEvent.TRANSACTION_ERROR));
+        return console.error(err);
+      }
+      console.log('saved');
+    };
     for (var i=0; i<dummyData.length; i++) {
       var activity = new self.activity(dummyData[i]);
-      activity.save(function(err, response) {
-        if (err) {
-          console.log('[Error]' + ' SAVE ERROR: ITEM : ' + ' Error message: '+err);
-          self.events.dispatchEvent(new SmartEvent(SmartEvent.TRANSACTION_ERROR));
-          return console.error(err);
-        }
-        console.log('saved');
-      });
+      activity.save(saveFnc);
     }
   },
   flush: function() {
     this.activity.remove({}, function(err) {
-      console.log('collection removed')
+      console.log('collection removed');
     });
   },
-}
+};
 
 module.exports = function(settings, eventManager) {
   ActivityController.prototype.events = eventManager;
   ActivityController.prototype.settings = settings;
   return ActivityController;
-}
+};

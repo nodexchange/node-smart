@@ -15,25 +15,23 @@ var MongooseController = function() {
     process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
     process.env.OPENSHIFT_APP_NAME;
   }
-
   this.settings = {
     'localhost': 'mongodb://localhost/node-smart',
     'live': 'mongodb://localhost/node-smart'
-  }
+  };
+  this.installCache();
   this.init();
-}
+};
 
 MongooseController.prototype = {
   init: function() {
-    if (process.env.OPENSHIFT_NODEJS_IP) {
-      var database = 'mongodb://'+this.connectionString;
-    } else {
-      var database = this.settings.localhost;
-    }
     var self = this;
-
+    var database = this.settings.localhost;
+    if (process.env.OPENSHIFT_NODEJS_IP) {
+      database = 'mongodb://'+this.connectionString;
+    }
     var activityModel = require('../models/activity');
-
+    var accountModel = require('../models/account');
     mongoose.connect(database, function(err) {
       if (err) throw err;
     });
@@ -44,14 +42,22 @@ MongooseController.prototype = {
       var event = new IQEvent(IQEvent.MONGOOSE_READY);
       event.mongoose = mongoose;
       event.activity = activityModel;
+      event.accounts = accountModel;
       //event.users = users;
       self.events.dispatchEvent(event);
     });
+  },
+  installCache: function() {
+    var cacheOpts = {
+      max:50,
+      maxAge:1000*60*2
+    };
+    require('mongoose-cache').install(mongoose, cacheOpts);
   }
-}
+};
 
 module.exports = function(settings, eventManager) {
   MongooseController.prototype.events = eventManager;
   MongooseController.prototype.settings = settings;
   return MongooseController;
-}
+};
