@@ -119,14 +119,14 @@ self.activity.find({}, function(err, response) {
     var req = event.request;
     var res = event.response;
     if (!req.user) {
-      // TODO(martin): Make sure to uncomment for secured get call;
-      //res.json({});
-      //return;
+      res.json({});
+      return;
     }
     switch (event.type) {
       case IQEvent.REQUEST.JSON.ACCOUNTS:
         self.getAccounts(function(err, data) {
-          res.json(data);
+          var json = {"total":data.length,"rows":data};
+          res.json(json);
         });
         break;
     }

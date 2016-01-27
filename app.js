@@ -12,12 +12,14 @@ var IQEvent = require('./event/IQEvent');
 var EventManager = require('./event/eventManager')(settings);
 var events = new EventManager();
 var RequestHelper = require('./helpers/request')(settings, events);
+var PostHelper = require('./helpers/post')(settings, events);
 var Activity = require('./controllers/activity')(settings, events);
 var Mongoose = require('./controllers/mongoose')(settings, events);
 var Routes = require('./routes/routes')(settings, events);
 var users = require('./routes/users');
 
 var requestHelper = new RequestHelper();
+var postHelper = new PostHelper();
 var activity = new Activity();
 var mongoose = new Mongoose();
 var routes = new Routes();
