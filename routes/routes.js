@@ -126,6 +126,10 @@ Routes.prototype = {
           self.dispatchServerIQEvent(IQEvent.HEADERS.debug, 'activity', req.query.action);
           self.sendHtmlResponse(res, 'debug activity  '+Math.random()*2000 + ' ::: ');
           break;
+        case 'posts':
+          self.dispatchServerIQEvent(IQEvent.HEADERS.debug, 'posts', req.query.action);
+          self.sendHtmlResponse(res, 'debug posts  '+Math.random()*2000 + ' ::: ');
+          break;
       }
       //self.dispatchServerIQEvent(IQEvent.HEADERS.debug, 'buy');
       // self.sendHtmlResponse(res, 'Dispatched Budget Buy '+Math.random()*2000 + ' ::: ');

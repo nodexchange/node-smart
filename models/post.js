@@ -16,7 +16,7 @@ var PostSchema = new Schema({
     tags: String,
     author: String,
     originalUrl: String,
-    highlited: Boolean,
+    highlighted: Boolean,
     published: Boolean
 });
 

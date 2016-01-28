@@ -24,7 +24,7 @@ PostsController.prototype = {
         switch (event.route) {
           case 'posts':
             if (event.action == 'add') {
-              self.dummyActivities();
+              self.dummyPosts();
             } else if (event.action == 'log') {
               self.log();
             } else if (event.action == 'flush') {
@@ -37,18 +37,18 @@ PostsController.prototype = {
   },
 
   log: function() {
-    this.activity.find({}, function(err, response) {
+    this.posts.find({}, function(err, response) {
       console.log(response);
     });
   },
 
-  dummyActivities: function() {
+  dummyPosts: function() {
     var self = this;
     var dummyData = [
-      {author:'Martin Buchannon', text:'created new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'},
-      {author:'Michael Buchannon', text:'updated new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'},
-      {author:'Tom Buchannon', text:'removed new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'},
-      {author:'Carl Buchannon', text:'cloned new page', section:'Contact', subsection:'Wireframes Taiga Tribe', action:'save'}
+      {title:'Martin Buchannon', text:'created new page', smallImage:'http://www.keenthemes.com/preview/conquer/assets/plugins/jcrop/demos/demo_files/image1.jpg', largeImage:'Wireframes Taiga Tribe', companyName:"AOL Inc", index:"AOL", clicks:"20", section:"business", subsection:"digital", tags:"merger, won", author:"CNN", originalUrl:"cnn.com/test", highlighted:"false", published:"true"},
+      {title:'Random Titile 1', text:'created new page', smallImage:'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg', largeImage:'Wireframes Taiga Tribe', companyName:"AOL Inc", index:"AOL", clicks:"20", section:"business", subsection:"digital", tags:"merger, won", author:"CNN", originalUrl:"cnn.com/test", highlighted:"false", published:"true"},
+      {title:'My Title 2', text:'created new page', smallImage:'http://www.online-image-editor.com//styles/2014/images/example_image.png', largeImage:'Wireframes Taiga Tribe', companyName:"AOL Inc", index:"AOL", clicks:"20", section:"business", subsection:"digital", tags:"merger, won", author:"CNN", originalUrl:"cnn.com/test", highlighted:"false", published:"true"},
+      {title:'Heading 3 test', text:'created new page', smallImage:'http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg', largeImage:'Wireframes Taiga Tribe', companyName:"AOL Inc", index:"AOL", clicks:"20", section:"business", subsection:"digital", tags:"merger, won", author:"CNN", originalUrl:"cnn.com/test", highlighted:"false", published:"true"}
     ];
     // TODO(martin): check if that works.
     var saveFnc = function(err, response) {
@@ -60,12 +60,12 @@ PostsController.prototype = {
       console.log('saved');
     };
     for (var i=0; i<dummyData.length; i++) {
-      var activity = new self.activity(dummyData[i]);
-      activity.save(saveFnc);
+      var post = new self.posts(dummyData[i]);
+      post.save(saveFnc);
     }
   },
   flush: function() {
-    this.activity.remove({}, function(err) {
+    this.posts.remove({}, function(err) {
       console.log('collection removed');
     });
   },
