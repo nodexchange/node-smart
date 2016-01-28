@@ -32,6 +32,8 @@ MongooseController.prototype = {
     }
     var activityModel = require('../models/activity');
     var accountModel = require('../models/account');
+    var postModel = require('../models/post');
+
     mongoose.connect(database, function(err) {
       if (err) throw err;
     });
@@ -43,6 +45,7 @@ MongooseController.prototype = {
       event.mongoose = mongoose;
       event.activity = activityModel;
       event.accounts = accountModel;
+      event.posts = postModel;
       //event.users = users;
       self.events.dispatchEvent(event);
     });

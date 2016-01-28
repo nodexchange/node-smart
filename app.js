@@ -14,6 +14,7 @@ var events = new EventManager();
 var RequestHelper = require('./helpers/request')(settings, events);
 var PostHelper = require('./helpers/post')(settings, events);
 var Activity = require('./controllers/activity')(settings, events);
+var Activity = require('./controllers/posts')(settings, events);
 var Mongoose = require('./controllers/mongoose')(settings, events);
 var Routes = require('./routes/routes')(settings, events);
 var users = require('./routes/users');

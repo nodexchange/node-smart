@@ -32,6 +32,7 @@ sends back the response with the data included.
     self.events.addEventListener(IQEvent.MONGOOSE_READY, function(event) {
       self.activity = event.activity;
       self.accounts = event.accounts;
+      self.posts = event.posts;
     });
 
     self.events.addEventListener(IQEvent.RENDER.DASHBOARD.HOME, function(event) {
@@ -53,6 +54,10 @@ sends back the response with the data included.
     });
 
     self.events.addEventListener(IQEvent.REQUEST.JSON.ACCOUNTS, function(event) {
+      self.renderJSON(event);
+    });
+
+    self.events.addEventListener(IQEvent.REQUEST.JSON.POSTS, function(event) {
       self.renderJSON(event);
       //self.activity.find({}).limit(10).cache().exec(function(err, activities) {
       //  console.log(activities);
@@ -89,6 +94,15 @@ self.activity.find({}, function(err, response) {
   getAccounts: function(cb) {
     var self = this;
     self.accounts.find({}).limit(10).cache().exec(cb);
+    // self.activity.find({}).limit(10).cache().exec(function(err, activities) {
+    //   //res.render('dashboard-posts', { user : req.user });
+    //   res.render('dashboard-home', { user : req.user, activities: activities });
+    // });
+  },
+
+  getPosts: function(cb) {
+    var self = this;
+    self.posts.find({}).limit(10).cache().exec(cb);
     // self.activity.find({}).limit(10).cache().exec(function(err, activities) {
     //   //res.render('dashboard-posts', { user : req.user });
     //   res.render('dashboard-home', { user : req.user, activities: activities });
@@ -136,6 +150,12 @@ self.activity.find({}, function(err, response) {
           res.json(json);
         });
         break;
+        case IQEvent.REQUEST.JSON.POSTS:
+          self.getPosts(function(err, data) {
+            var json = {"total":data.length,"rows":data};
+            res.json(json);
+          });
+          break;
     }
 
   }
